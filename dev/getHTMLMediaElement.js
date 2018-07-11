@@ -260,6 +260,7 @@ function getHTMLMediaElement(mediaElement, config) {
     if (config.height) {
         mediaBox.style.height = config.height + 'px';
     }
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
     mediaBox.querySelector('video').style.maxHeight = innerHeight + 'px';
 

@@ -1,7 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
-
 function resolveURL(url) {
     var isWin = !!process.platform.match(/^win/);
     if (!isWin) return url;
@@ -13,16 +9,6 @@ var isUseHTTPs = false;
 
 // var port = 443;
 var port = process.env.PORT || 9001;
-
-try {
-    process.argv.forEach(function(val, index, array) {
-        if (!val) return;
-
-        if (val === '--ssl') {
-            isUseHTTPs = true;
-        }
-    });
-} catch (e) {}
 
 var fs = require('fs');
 var path = require('path');
@@ -60,36 +46,36 @@ function serverHandler(request, response) {
             return;
         }
 
-        ['Video-Broadcasting', 'Screen-Sharing', 'Switch-Cameras'].forEach(function(fname) {
-            if (filename && filename.indexOf(fname + '.html') !== -1) {
-                filename = filename.replace(fname + '.html', fname.toLowerCase() + '.html');
-            }
-        });
+        // ['Video-Broadcasting', 'Screen-Sharing', 'Switch-Cameras'].forEach(function(fname) {
+        //     if (filename && filename.indexOf(fname + '.html') !== -1) {
+        //         filename = filename.replace(fname + '.html', fname.toLowerCase() + '.html');
+        //     }
+        // });
 
         var stats;
 
-        try {
-            stats = fs.lstatSync(filename);
-
-            if (filename && filename.search(/demos/g) === -1 && stats.isDirectory()) {
-                if (response.redirect) {
-                    response.redirect('/demos/');
-                } else {
-                    response.writeHead(301, {
-                        'Location': '/demos/'
-                    });
-                }
-                response.end();
-                return;
-            }
-        } catch (e) {
-            response.writeHead(404, {
-                'Content-Type': 'text/plain'
-            });
-            response.write('404 Not Found: ' + path.join('/', uri) + '\n');
-            response.end();
-            return;
-        }
+        // try {
+        //     stats = fs.lstatSync(filename);
+        //
+        //     if (filename && filename.search(/demos/g) === -1 && stats.isDirectory()) {
+        //         if (response.redirect) {
+        //             response.redirect('/demos/');
+        //         } else {
+        //             response.writeHead(301, {
+        //                 'Location': '/demos/'
+        //             });
+        //         }
+        //         response.end();
+        //         return;
+        //     }
+        // } catch (e) {
+        //     response.writeHead(404, {
+        //         'Content-Type': 'text/plain'
+        //     });
+        //     response.write('404 Not Found: ' + path.join('/', uri) + '\n');
+        //     response.end();
+        //     return;
+        // }
 
         if (fs.statSync(filename).isDirectory()) {
             response.writeHead(404, {
@@ -128,44 +114,6 @@ function serverHandler(request, response) {
                 response.end();
                 return;
             }
-
-            try {
-                var demos = (fs.readdirSync('demos') || []);
-
-                if (demos.length) {
-                    var h2 = '<h2 style="text-align:center;display:block;"><a href="https://www.npmjs.com/package/rtcmulticonnection-v3"><img src="https://img.shields.io/npm/v/rtcmulticonnection-v3.svg"></a><a href="https://www.npmjs.com/package/rtcmulticonnection-v3"><img src="https://img.shields.io/npm/dm/rtcmulticonnection-v3.svg"></a><a href="https://travis-ci.org/muaz-khan/RTCMultiConnection"><img src="https://travis-ci.org/muaz-khan/RTCMultiConnection.png?branch=master"></a></h2>';
-                    var otherDemos = '<section class="experiment" id="demos"><details><summary style="text-align:center;">Check ' + (demos.length - 1) + ' other RTCMultiConnection-v3 demos</summary>' + h2 + '<ol>';
-                    demos.forEach(function(f) {
-                        if (f && f !== 'index.html' && f.indexOf('.html') !== -1) {
-                            otherDemos += '<li><a href="/demos/' + f + '">' + f + '</a> (<a href="https://github.com/muaz-khan/RTCMultiConnection/tree/master/demos/' + f + '">Source</a>)</li>';
-                        }
-                    });
-                    otherDemos += '<ol></details></section><section class="experiment own-widgets latest-commits">';
-
-                    file = file.replace('<section class="experiment own-widgets latest-commits">', otherDemos);
-                }
-            } catch (e) {}
-
-            try {
-                var docs = (fs.readdirSync('docs') || []);
-
-                if (docs.length) {
-                    var html = '<section class="experiment" id="docs">';
-                    html += '<details><summary style="text-align:center;">RTCMultiConnection Docs</summary>';
-                    html += '<h2 style="text-align:center;display:block;"><a href="http://www.rtcmulticonnection.org/docs/">http://www.rtcmulticonnection.org/docs/</a></h2>';
-                    html += '<ol>';
-
-                    docs.forEach(function(f) {
-                        if (f.indexOf('DS_Store') == -1) {
-                            html += '<li><a href="https://github.com/muaz-khan/RTCMultiConnection/tree/master/docs/' + f + '">' + f + '</a></li>';
-                        }
-                    });
-
-                    html += '</ol></details></section><section class="experiment own-widgets latest-commits">';
-
-                    file = file.replace('<section class="experiment own-widgets latest-commits">', html);
-                }
-            } catch (e) {}
 
             response.writeHead(200, {
                 'Content-Type': contentType
@@ -272,8 +220,6 @@ function runServer() {
             console.log('\x1b[31m%s\x1b[0m ', 'Please set isUseHTTPs=true to make sure audio,video and screen demos can work on Google Chrome as well.');
         }
 
-        console.log('------------------------------');
-        console.log('Need help? http://bit.ly/2ff7QGk');
     });
 
     require('./Signaling-Server.js')(app, function(socket) {

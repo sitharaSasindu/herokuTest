@@ -1,6 +1,3 @@
-// Muaz Khan      - www.MuazKhan.com
-// MIT License    - www.WebRTC-Experiment.com/licence
-// Documentation  - github.com/muaz-khan/RTCMultiConnection
 
 // to use this signaling-server.js file:
 // require('./Signaling-Server.js')(socketio_object); --- pass socket.io object
@@ -45,11 +42,8 @@ module.exports = exports = function(app, socketCallback) {
         onConnection(app);
     }
 
-    // to secure your socket.io usage: (via: docs/tips-tricks.md)
-    // io.set('origins', 'https://domain.com');
-
     function appendUser(socket) {
-        var alreadyExist = listOfUsers[socket.userid];
+        var alreadyExist = listOfUsers[socket.userid];//adding users
         var extra = {};
 
         if (alreadyExist && alreadyExist.extra) {
@@ -69,7 +63,7 @@ module.exports = exports = function(app, socketCallback) {
             }
         }
 
-        listOfUsers[socket.userid] = {
+        listOfUsers[socket.userid] = { //index of a connected user
             socket: socket,
             connectedWith: {},
             isPublic: false, // means: isPublicModerator
@@ -93,7 +87,7 @@ module.exports = exports = function(app, socketCallback) {
         }
 
         // [disabled]
-        if (false && !!listOfUsers[params.userid]) {
+        if (false && !!listOfUsers[params.userid]) {//replace already taken user ids
             params.dontUpdateUserId = true;
 
             var useridAlreadyTaken = params.userid;

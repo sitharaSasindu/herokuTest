@@ -1,8 +1,3 @@
-/*
-Muaz Khan     - www.MuazKhan.com
-MIT License   - www.WebRTC-Experiment.com/licence
-Documentation - github.com/muaz-khan/WebRTC-Experiment/tree/master/getMediaElement
-*/
 
 .media-container, .media-container * {
     margin: 0;
@@ -119,9 +114,25 @@ Documentation - github.com/muaz-khan/WebRTC-Experiment/tree/master/getMediaEleme
 }
 
 .media-box video {
+    /*width: 100%;*/
+    /*vertical-align: top;*/
+    /*object-fit: fill;*/
+
+    width: 100%;
+    vertical-align: bottom;
+    object-fit: fill;
+
+    /*object-fit: fill;*/
+    /*width: 30%;*/
+}
+
+.media-box videolocal {
     width: 100%;
     vertical-align: top;
     object-fit: fill;
+
+    /*object-fit: fill;*/
+    /*width: 30%;*/
 }
 
 .media-box audio {
