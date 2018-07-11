@@ -427,7 +427,7 @@ module.exports = exports = function(app, socketCallback) {
                             return;
                         }
 
-                        setTimeout(repeater, 1000);
+                        setTimeout(repeater, 2000);
                     })();
 
                     return;

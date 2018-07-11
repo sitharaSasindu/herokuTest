@@ -193,7 +193,7 @@ window.RTCMultiConnection = function(roomid, forceOptions) {
                     // make sure that we've local media before making a handshake
                     setTimeout(function() {
                         onMessageEvent(message);
-                    }, 1000);
+                    }, 2000);
                     return;
                 }
 
@@ -392,7 +392,7 @@ window.RTCMultiConnection = function(roomid, forceOptions) {
             setTimeout(function() {
                 connection.open(sessionid);
                 connection.socket.emit('shift-moderator-control-on-disconnect');
-            }, 1000);
+            }, 2000);
         });
     }
 
@@ -5137,7 +5137,7 @@ window.RTCMultiConnection = function(roomid, forceOptions) {
             callback = callback || function() {};
             connection.socket.emit('close-entire-session', function looper() {
                 if (connection.getAllParticipants().length) {
-                    setTimeout(looper, 100);
+                    setTimeout(looper, 200);
                     return;
                 }
 
